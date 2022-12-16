@@ -57,7 +57,7 @@ function afficherProduit(product) {
 let btnpanier = document.querySelector("#addToCart");
 console.log(btnpanier);
 // stocker la récupération des valeurs dans le local storage
-let contenuLocalstorage = JSON.parse(localStorage.getItem("product"));
+let contenuLocalstorage = JSON.parse(localStorage.getItem("product")) ||[];
 console.log(contenuLocalstorage);
 //écouter l'événement click
 btnpanier.addEventListener("click", function () {
