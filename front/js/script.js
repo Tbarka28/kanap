@@ -9,7 +9,7 @@ fetch("http://localhost:3000/api/products")
     ajoutArticles(articles);
     console.log(articles);
   })
-  
+
   .catch(function (err) {
     console.log(err);
   });
@@ -18,7 +18,7 @@ fetch("http://localhost:3000/api/products")
 
 function ajoutArticles(articles) {
   //let fragment = document.createDocumentFragment()
-  let produitconteneur=document.getElementById("items")
+  let produitconteneur = document.getElementById("items")
   for (let article of articles) {
 
     //création du lien (a) du produit
@@ -50,5 +50,5 @@ function ajoutArticles(articles) {
     //fragment.appendChild(carte)
     produitconteneur.appendChild(lienElement)
   }
- // document.getElementById("items").appendChild(fragment)
+  // document.getElementById("items").appendChild(fragment)
 }

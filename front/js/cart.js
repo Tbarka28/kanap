@@ -119,7 +119,7 @@ function afficherProduitPanier(articles) {
   getTotals(articles)
   priceTotals(articles)
   changeQty();
-  
+
 }
 
 function getTotals(articles) {
@@ -171,7 +171,7 @@ function changeQty() {
   };
 };
 
- 
+
 // Déclaration des variables utilisées pour le formulaire et REGEX //
 
 let form = document.querySelector(".cart__order__form");

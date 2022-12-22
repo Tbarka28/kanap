@@ -57,7 +57,7 @@ function afficherProduit(product) {
 let btnpanier = document.querySelector("#addToCart");
 console.log(btnpanier);
 // stocker la récupération des valeurs dans le local storage
-let contenuLocalstorage = JSON.parse(localStorage.getItem("product")) ||[];
+let contenuLocalstorage = JSON.parse(localStorage.getItem("product")) || [];
 console.log(contenuLocalstorage);
 //écouter l'événement click
 btnpanier.addEventListener("click", function () {
@@ -80,7 +80,7 @@ btnpanier.addEventListener("click", function () {
     //const contenuLocalstorage = [idProduit, quantityProduit, couleurChoisie];//ici
     const found = contenuLocalstorage.find(
       (element) => element.id == idProduit && element.color == couleurChoisie);
-      
+
     if (found != undefined) {
       //valeur LocaleStorage + value actuelle
       let totalQuantity = parseInt(found.quantity) + parseInt(newProduct.quantity);
@@ -88,18 +88,18 @@ btnpanier.addEventListener("click", function () {
 
 
     } else {
-       //=> on enregistre les éléments ds le LS si il n'existe pas
+      //=> on enregistre les éléments ds le LS si il n'existe pas
       contenuLocalstorage.push(newProduct);
 
     }
-//  on enregistre le nv element et on additionne ds le LS
-    localStorage.setItem("product", JSON.stringify(contenuLocalstorage)); 
-    
-   popup(newProduct)
+    //  on enregistre le nv element et on additionne ds le LS
+    localStorage.setItem("product", JSON.stringify(contenuLocalstorage));
+
+    popup(newProduct)
 
   }
 });
- // message de notification lors de l’ajout d’un produit au panier 
+// message de notification lors de l’ajout d’un produit au panier 
 const popup = (product) => {
 
   if (window.confirm(`Votre produit ${product.quantity} ${product.color} est ajoutée au panier
@@ -114,10 +114,10 @@ const popup = (product) => {
 }
 
 
- 
- 
 
-    
+
+
+
 
 
 
