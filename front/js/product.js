@@ -10,11 +10,9 @@ fetch(`http://localhost:3000/api/products/${idProduit}`)
       return res.json();
     }
   })
-  .then(product => {
+  .then((product) => {
     afficherProduit(product);
-    console.log(product);
   })
-
   .catch(function (err) {
     console.log(err);
   });
@@ -23,35 +21,28 @@ function afficherProduit(product) {
   let divImage = document.querySelector(".item__img");
 
   // insertion image du canapé
-  let imageElement = document.createElement("img")
+  let imageElement = document.createElement("img");
   imageElement.src = product.imageUrl;
   imageElement.alt = product.altTxt;
-  divImage.appendChild(imageElement)
-
+  divImage.appendChild(imageElement);
   // insertion du nom du canapé
-  let nomElement = document.querySelector("#title")
-  nomElement.innerHTML = product.name
-
+  let nomElement = document.querySelector("#title");
+  nomElement.innerHTML = product.name;
   // insertion du prix du canapé
-  let prixElement = document.querySelector("#price")
-  prixElement.innerHTML = product.price
-
+  let prixElement = document.querySelector("#price");
+  prixElement.innerHTML = product.price;
   // insertion description du canapé
-  let descriptionElement = document.querySelector("#description")
-  descriptionElement.innerHTML = product.description
-
+  let descriptionElement = document.querySelector("#description");
+  descriptionElement.innerHTML = product.description;
   // configurer le choix des couleurs
-
-  product.colors.forEach(color => {
+  product.colors.forEach((color) => {
     let couleurElement = document.querySelector("#colors");
-    console.log(color);
     let optionCouleur = document.createElement("option");
-    couleurElement.appendChild(optionCouleur)
+    couleurElement.appendChild(optionCouleur);
     optionCouleur.setAttribute("value", color);
     optionCouleur.innerHTML = color;
   });
 }
-
 //Activation du bouton "Ajouter au panier"
 // récupérer l'élément sur lequel on veut détecter le clic
 let btnpanier = document.querySelector("#addToCart");
@@ -66,8 +57,9 @@ btnpanier.addEventListener("click", function () {
   const couleurChoisie = document.getElementById("colors").value;
   console.log(couleurChoisie);
   if (quantityProduit <= 0 || quantityProduit > 100 || couleurChoisie == "") {
-    alert("Veuillez choisir une quantité entre 1 et 100 et/ou une couleur de canapé");
-
+    alert(
+      "Veuillez choisir une quantité entre 1 et 100 et/ou une couleur de canapé"
+    );
   } else {
     //création nouveau produit avec les 3 références
     let newProduct = {
@@ -77,13 +69,13 @@ btnpanier.addEventListener("click", function () {
     };
     console.log(newProduct);
     // rechercher un produit si  déja existant ds le LS
-    //const contenuLocalstorage = [idProduit, quantityProduit, couleurChoisie];//ici
     const found = contenuLocalstorage.find(
-      (element) => element.id == idProduit && element.color == couleurChoisie);
-
+      (element) => element.id == idProduit && element.color == couleurChoisie
+    );
     if (found != undefined) {
       //valeur LocaleStorage + value actuelle
-      let totalQuantity = parseInt(found.quantity) + parseInt(newProduct.quantity);
+      let totalQuantity =
+        parseInt(found.quantity) + parseInt(newProduct.quantity);
       found.quantity = totalQuantity;
 
 
@@ -94,35 +86,19 @@ btnpanier.addEventListener("click", function () {
     }
     //  on enregistre le nv element et on additionne ds le LS
     localStorage.setItem("product", JSON.stringify(contenuLocalstorage));
-
-    popup(newProduct)
-
+    popup(newProduct);
   }
 });
-// message de notification lors de l’ajout d’un produit au panier 
+// message de notification lors de l’ajout d’un produit au panier
 const popup = (product) => {
-
-  if (window.confirm(`Votre produit ${product.quantity} ${product.color} est ajoutée au panier
-      Pour consulter votre panier, cliquez sur OK`)) {
+  if (
+    window.confirm(`Votre produit ${product.quantity} ${product.color} est ajoutée au panier
+      Pour consulter votre panier, cliquez sur OK`)
+  ) {
     ////renvoie sur la page panier du client
     window.location.href = "cart.html";
-  }
-  else {
-    //renvoie sur la page d'acceuil 
+  } else {
+    //renvoie sur la page d'acceuil
     window.location.href = "index.html";
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
