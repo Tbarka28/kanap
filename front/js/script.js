@@ -6,18 +6,14 @@ fetch("http://localhost:3000/api/products")
     }
   })
   .then(articles => {
-    ajoutArticles(articles);
-    console.log(articles);
+    afficherArticles(articles);
   })
 
   .catch(function (err) {
-    console.log(err);
+    alert("une erreur s'est produite");
   });
-
 //  Insérer les produits dans la page d’accueil 
-
-function ajoutArticles(articles) {
-  //let fragment = document.createDocumentFragment()
+function afficherArticles(articles) {
   let produitconteneur = document.getElementById("items")
   for (let article of articles) {
 
@@ -33,22 +29,17 @@ function ajoutArticles(articles) {
     imageElement.src = article.imageUrl;
     imageElement.alt = article.altTxt;
     baliseArticle.appendChild(imageElement)
-
     //creation de la balise (h3) le nom du produit.
     let titreElement = document.createElement("h3")
     titreElement.classList.add("productName")
     titreElement.textContent = article.name
     baliseArticle.appendChild(titreElement)
-
     //creation de la balise (p) description du produit.
     let paragElement = document.createElement("p")
     paragElement.classList.add("productDescription")
     paragElement.textContent = article.description
     baliseArticle.appendChild(paragElement)
-
     lienElement.appendChild(baliseArticle)
-    //fragment.appendChild(carte)
     produitconteneur.appendChild(lienElement)
   }
-  // document.getElementById("items").appendChild(fragment)
 }
