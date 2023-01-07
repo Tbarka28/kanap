@@ -8,7 +8,6 @@ fetch("http://localhost:3000/api/products")
   .then(articles => {
     afficherArticles(articles);
   })
-
   .catch(function (err) {
     alert("une erreur s'est produite");
   });
@@ -16,14 +15,11 @@ fetch("http://localhost:3000/api/products")
 function afficherArticles(articles) {
   let produitconteneur = document.getElementById("items")
   for (let article of articles) {
-
     //création du lien (a) du produit
     let lienElement = document.createElement("a")
     lienElement.setAttribute("href", `./product.html?id=${article._id}`)
-
     //création de la balise parent (article) et les balises enfants
     let baliseArticle = document.createElement("article")
-
     //creation de la balise enfant (img) image du produit.
     let imageElement = document.createElement("img")
     imageElement.src = article.imageUrl;
