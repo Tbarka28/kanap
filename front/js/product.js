@@ -19,7 +19,6 @@ fetch(`http://localhost:3000/api/products/${idProduit}`)
 //Affichage du produit
 function afficherProduit(product) {
   let divImage = document.querySelector(".item__img");
-
   // insertion image du canapé
   let imageElement = document.createElement("img");
   imageElement.src = product.imageUrl;
@@ -46,16 +45,12 @@ function afficherProduit(product) {
 //Activation du bouton "Ajouter au panier"
 // récupérer l'élément sur lequel on veut détecter le clic
 let btnpanier = document.querySelector("#addToCart");
-console.log(btnpanier);
 // stocker la récupération des valeurs dans le local storage
 let contenuLocalstorage = JSON.parse(localStorage.getItem("product")) || [];
-console.log(contenuLocalstorage);
 //écouter l'événement click
 btnpanier.addEventListener("click", function () {
   const quantityProduit = document.getElementById("quantity").value;
-  console.log(quantityProduit);
   const couleurChoisie = document.getElementById("colors").value;
-  console.log(couleurChoisie);
   if (quantityProduit <= 0 || quantityProduit > 100 || couleurChoisie == "") {
     alert(
       "Veuillez choisir une quantité entre 1 et 100 et/ou une couleur de canapé"
@@ -67,7 +62,6 @@ btnpanier.addEventListener("click", function () {
       quantity: quantityProduit,
       color: couleurChoisie,
     };
-    console.log(newProduct);
     // rechercher un produit si  déja existant ds le LS
     const found = contenuLocalstorage.find(
       (element) => element.id == idProduit && element.color == couleurChoisie
@@ -77,12 +71,9 @@ btnpanier.addEventListener("click", function () {
       let totalQuantity =
         parseInt(found.quantity) + parseInt(newProduct.quantity);
       found.quantity = totalQuantity;
-
-
     } else {
       //=> on enregistre les éléments ds le LS si il n'existe pas
       contenuLocalstorage.push(newProduct);
-
     }
     //  on enregistre le nv element et on additionne ds le LS
     localStorage.setItem("product", JSON.stringify(contenuLocalstorage));
