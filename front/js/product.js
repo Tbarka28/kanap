@@ -2,7 +2,7 @@
 let str = window.location.href;
 let url = new URL(str);
 let idProduit = url.searchParams.get("id");
-console.log(idProduit);
+//console.log(idProduit);
 //Appel API avec l'id du produit
 fetch(`http://localhost:3000/api/products/${idProduit}`)
   .then(function (res) {

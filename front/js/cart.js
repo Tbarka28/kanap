@@ -75,20 +75,26 @@ function afficherProduitPanier(articles) {
       inputQte.setAttribute("max", "100");
       inputQte.setAttribute("value", produitPanier.quantity);
       inputQte.addEventListener("change", (event) => {
-        let nouvelleValeur = event.target.value;
-        ///aller localestoreg chercher l'article avec id et la couleur similaire et en change la quantity
-        let panier = getLocalestorage();
-        let found = panier.find(
-          (element) =>
-            element.id == produitPanier.id &&
-            element.color == produitPanier.color
-        );
-        if (found != undefined) {
-          found.quantity = nouvelleValeur;
-          localStorage.setItem("product", JSON.stringify(panier));
-          calculerTotalQuantity();
-          priceTotals(articles);
+        ///la quantité du produit doit être supérieur à 0 et inférieur à 100
+        if (event.target.value < 0 || event.target.value > 100) {
+          alert("Veuillez choisir une quantité entre 1 et 100 ");
+          ///La quantity sera automatiquement remise à 1
+          inputQte.value = 1;
         }
+          let nouvelleValeur = event.target.value;
+          ///aller localestoreg chercher l'article avec id et la couleur similaire et en change la quantity
+          let panier = getLocalestorage();
+          let found = panier.find(
+            (element) =>
+              element.id == produitPanier.id &&
+              element.color == produitPanier.color
+          );
+          if (found != undefined) {
+            found.quantity = nouvelleValeur;
+            localStorage.setItem("product", JSON.stringify(panier));
+            calculerTotalQuantity();
+            priceTotals(articles);
+          } 
       });
       divSettingsQuantity.appendChild(inputQte);
       divSettings.appendChild(divSettingsQuantity);
@@ -103,7 +109,7 @@ function afficherProduitPanier(articles) {
       // Lors du clic sur le btn suppr on récup l'id de l'article en question
       pDelete.addEventListener("click", (event) => {
         if (window.confirm(`êtes-vous sûr de vouloir supprimer cet article?`)) {
-          let removeItem = pDelete.closest(".cart__item"); 
+          let removeItem = pDelete.closest(".cart__item");
           let nouveauPanier = getLocalestorage().filter(
             (item) =>
               item.color !== produitPanier.color &&
@@ -155,11 +161,60 @@ let lastName = document.getElementById("lastName");
 let address = document.getElementById("address");
 let city = document.getElementById("city");
 let email = document.getElementById("email");
-// Valider le formulaire //
 // types regex sur les inputs
 let addressRegex = /^[#.0-9a-zA-Z\s,-]+$/;
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-let genericRegex = /^[a-zA-Z\u00C0-\u00FF ,.'-]+$/;
+let genericRegex = /^[A-zÀ-ú \-]+$/;
+// Lors d'un clic, si l'un des champs n'est pas rempli correctement, un message d’erreur va être affiché en dessous du champ.
+let firstNameErrorMsg = document.querySelector("#firstNameErrorMsg");
+form.firstName.addEventListener("change", function (e) {
+  let value = e.target.value;
+  if (genericRegex.test(value)) {
+    firstNameErrorMsg.innerHTML = "";
+  } else {
+    firstNameErrorMsg.innerHTML =
+      "Champ invalide, veuillez vérifier votre prénom.";
+  }
+});
+let lastNameErrorMsg = form.lastName.nextElementSibling;
+form.lastName.addEventListener("change", function (e) {
+  let value = e.target.value;
+  if (genericRegex.test(value)) {
+    lastNameErrorMsg.innerHTML = "";
+  } else {
+    lastNameErrorMsg.innerHTML = "Champ invalide, veuillez vérifier votre nom.";
+  }
+});
+let adressErrorMsg = document.querySelector("#addressErrorMsg");
+form.address.addEventListener("change", function (e) {
+  let value = e.target.value;
+  if (addressRegex.test(value)) {
+    adressErrorMsg.innerHTML = "";
+  } else {
+    adressErrorMsg.innerHTML =
+      "Champ invalide, veuillez vérifier votre adresse postale.";
+  }
+});
+let cityErrorMsg = document.querySelector("#cityErrorMsg");
+form.city.addEventListener("change", function (e) {
+  let value = e.target.value;
+  if (genericRegex.test(value)) {
+    cityErrorMsg.innerHTML = "";
+  } else {
+    cityErrorMsg.innerHTML = "Champ invalide, veuillez vérifier votre ville.";
+  }
+});
+let emailErrorMsg = document.querySelector("#emailErrorMsg");
+form.email.addEventListener("change", function (e) {
+  let value = e.target.value;
+  if (emailRegex.test(value)) {
+    emailErrorMsg.innerHTML = "";
+  } else {
+    emailErrorMsg.innerHTML =
+      "Champ invalide, veuillez vérifier votre adresse email.";
+  }
+});
+// Valider le formulaire //
 let confirm = document.getElementById("order");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
